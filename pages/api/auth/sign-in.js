@@ -28,7 +28,7 @@ export default async function handler(req, res) {
                     expiresIn: 60 * 60 * 24 * 1000
                 });
                 db.collection(ConfigService.mongo.collections.users).updateOne({ email: email }, { $set: { token: token } });
-    
+                    
                 res.status(200).json({ status: 200, token: token, user: user });
             });
             

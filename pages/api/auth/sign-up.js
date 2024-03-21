@@ -31,11 +31,11 @@ export default async function handler(req, res) {
     const db = client.db(ConfigService.mongo.db_name);
 
     if (req.method === 'POST') {
-        const { email, password } = req.body;
+        const { email, password, first_name, last_name } = req.body;
         try {
             const hashed_password = await bcrypt.hash(password, 10);
 
-            const user = await db.collection(ConfigService.mongo.collections.users).insertOne({ email: email, password: hashed_password });
+            const user = await db.collection(ConfigService.mongo.collections.users).insertOne({ email: email, password: hashed_password, first_name: first_name, last_name: last_name});
 
             res.status(200).json({ status: 200, user: user });
 

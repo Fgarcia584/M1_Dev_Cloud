@@ -7,7 +7,7 @@ import Link from '../src/theme/mui-base-components/Link';
 import Copyright from '../src/theme/mui-base-components/Copyright';
 import Navbar from '../src/components/navbar';
 
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useAuth } from '../src/contexts/auth.context';
 
@@ -23,7 +23,7 @@ export default function Index() {
   // }, [user, router]);
 
   return (
-    <Container maxWidth={false} disableGutters={true} >
+    <Container maxWidth={false} disableGutters={true} sx={{ backgroundColor:"gray", height:"100vh"  }} >
       <Navbar />
       <Box sx={{ my: 4 }}>
         <Typography variant="h4" component="h1" sx={{ mb: 2 }}>

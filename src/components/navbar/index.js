@@ -17,7 +17,7 @@ import { useAuth } from '../../contexts/auth.context';
 import { useEffect } from 'react';
 
 const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard'];
+const settings = ['Profile', 'Account'];
 
 function ResponsiveAppBar() {
     const { user, logout } = useAuth();
@@ -38,6 +38,11 @@ function ResponsiveAppBar() {
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
+    };
+
+    const handleLogout = () => {
+        logout();
+        handleCloseUserMenu();
     };
 
     useEffect(() => {
@@ -175,7 +180,7 @@ function ResponsiveAppBar() {
                                     <Typography textAlign="center">{setting}</Typography>
                                 </MenuItem>
                             ))}
-                            <MenuItem onClick={handleCloseUserMenu}>
+                            <MenuItem onClick={handleLogout}>
                                 <Typography textAlign="center"> Logout </Typography>
                             </MenuItem>
                         </Menu>

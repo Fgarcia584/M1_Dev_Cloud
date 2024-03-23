@@ -5,6 +5,7 @@ export const ConfigService = {
             movie: "https://api.themoviedb.org/3/movie",
             search: "https://api.themoviedb.org/3/search",
             trending: "https://api.themoviedb.org/3/trending/movie/week",
+            posters:"https://image.tmdb.org/t/p/original"
         },
         keys : {
             API_KEY: "62afbd90042e5e9a1150b43880ad0123",

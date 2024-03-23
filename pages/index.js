@@ -6,6 +6,8 @@ import ProTip from '../src/theme/mui-base-components/ProTip';
 import Link from '../src/theme/mui-base-components/Link';
 import Copyright from '../src/theme/mui-base-components/Copyright';
 import Navbar from '../src/components/navbar';
+import MovieCard from '../src/components/card/movie';
+import MoviesList from '../src/components/lists/movies';
 
 // import { useEffect } from 'react';
 import { useRouter } from 'next/router';
@@ -23,15 +25,13 @@ export default function Index() {
   // }, [user, router]);
 
   return (
-    <Container maxWidth={false} disableGutters={true} sx={{ backgroundColor:"gray", height:"100vh"  }} >
+    <Container maxWidth={false} disableGutters={true} sx={{ backgroundColor: "#353535" }} >
       <Navbar />
-      <Box sx={{ my: 4 }}>
-        <Typography variant="h4" component="h1" sx={{ mb: 2 }}>
-          Material UI - Next.js example
+      <Box sx={{ mt: 4 }}>
+        <Typography variant="h4" component="h1" sx={{ color: "white", ml: 2 }}>
+          Trending Movies
         </Typography>
-        <Link href="/ui/sign-in" color="secondary">
-          Go to the Sign-In page
-        </Link>
+        <MoviesList />
         <ProTip />
         <Copyright />
       </Box>

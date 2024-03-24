@@ -15,12 +15,14 @@ import jwt from 'jsonwebtoken';
 
 import { useAuth } from '../../contexts/auth.context';
 import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account'];
 
 function ResponsiveAppBar() {
     const { user, logout } = useAuth();
+    const router = useRouter();
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -45,13 +47,6 @@ function ResponsiveAppBar() {
         handleCloseUserMenu();
     };
 
-    useEffect(() => {
-        console.log(user);
-        if (user) { 
-            // console.log(jwt.verify(user.token, "secret"))
-         };
-    }, [user]);
-
     return (
         <AppBar position="static" sx={{ px: 2 }}>
             <Container maxWidth={false} >
@@ -60,7 +55,7 @@ function ResponsiveAppBar() {
                         variant="h6"
                         noWrap
                         component="a"
-                        href="/"
+                        onClick={() => router.push('/')} 
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },

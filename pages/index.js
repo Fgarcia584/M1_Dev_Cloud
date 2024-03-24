@@ -2,11 +2,8 @@ import * as React from 'react';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import ProTip from '../src/theme/mui-base-components/ProTip';
-import Link from '../src/theme/mui-base-components/Link';
-import Copyright from '../src/theme/mui-base-components/Copyright';
 import Navbar from '../src/components/navbar';
-import MovieCard from '../src/components/card/movie';
+
 import MoviesList from '../src/components/lists/movies';
 
 // import { useEffect } from 'react';
@@ -32,8 +29,6 @@ export default function Index() {
           Trending Movies
         </Typography>
         <MoviesList />
-        <ProTip />
-        <Copyright />
       </Box>
     </Container>
   );

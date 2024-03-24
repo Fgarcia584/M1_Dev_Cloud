@@ -1,4 +1,5 @@
 import clientPromise from "../../../../lib/mongodb";
+import { ObjectId } from 'mongodb';
 import { ConfigService } from "../../../../services/config.service";
 
 /**
@@ -35,6 +36,8 @@ import { ConfigService } from "../../../../services/config.service";
 export default async function handler(req, res) {
 
   const idMovie = parseInt(req.query.idMovie, 10);
+  const liked = req.body.liked;
+  const user_id = req.body.user_id;
 
   const client = await clientPromise;
   const db = client.db(ConfigService.mongo.db_name);
@@ -43,25 +46,62 @@ export default async function handler(req, res) {
 
     case "PATCH":
 
-      const like = await db.collection("likes").findOne({idTMDB: idMovie});
+      const like = await db.collection(ConfigService.mongo.collections.likes).findOne({ idTMDB: idMovie });
+      const user = await db.collection(ConfigService.mongo.collections.users).findOne({ _id: ObjectId(user_id) });
       let resMongo, data;
 
+      if (!user) {
+        res.status(404).json({ status: 404, error: "User not found" });
+        return;
+      }
+
       if (like) {
-         resMongo = await db.collection("likes").updateOne(
-           {idTMDB: idMovie},
-           { $inc: { likeCounter : 1 } }
-         )
-         data = {
-           action: 'likeCounter updated',
-           idMovie: idMovie,
-           matchedCount: resMongo.matchedCount,
-           modifiedCount: resMongo.modifiedCount
-         }
-         res.status(201).json({ status: 201, data: data });
-      } else {
-        resMongo = await db.collection("likes").insertOne(
-          {idTMDB: idMovie, likeCounter: 0}
+        resMongo = await db.collection(ConfigService.mongo.collections.likes).updateOne(
+          { idTMDB: idMovie },
+          { $inc: { likeCounter: liked ? 1 : -1 } }
         )
+
+        if (liked) {
+          await db.collection(ConfigService.mongo.collections.users).updateOne(
+            { _id: ObjectId(user_id) },
+            { $push: { likedMovies: idMovie } }
+          ).then((res) => {
+            console.log(res);
+          })
+        } else {
+          await db.collection(ConfigService.mongo.collections.users).updateOne(
+            { _id: ObjectId(user_id) },
+            { $pull: { likedMovies: idMovie } }
+          )
+        }
+
+        data = {
+          action: 'likeCounter updated',
+          idMovie: idMovie,
+          matchedCount: resMongo.matchedCount,
+          modifiedCount: resMongo.modifiedCount,
+          liked: liked
+        }
+        res.status(201).json({ status: 201, data: data });
+      } else {
+        resMongo = await db.collection(ConfigService.mongo.collections.likes).insertOne(
+          { idTMDB: idMovie, likeCounter: 1 }
+        )
+
+        if (liked) {
+          await db.collection(ConfigService.mongo.collections.users).updateOne(
+            { _id: ObjectId(user_id) },
+            { $push: { likedMovies: idMovie } }
+          ).then((res) => {
+            console.log(res);
+          })
+        } else {
+          await db.collection(ConfigService.mongo.collections.users).updateOne(
+            { _id: ObjectId(user_id) },
+            { $pull: { likedMovies: idMovie } }
+          )
+        }
+
         data = {
           action: 'likeCounter updated',
           idMovie: idMovie,
@@ -74,7 +114,7 @@ export default async function handler(req, res) {
 
     case "GET":
 
-      const likes = await db.collection("likes").findOne({idTMDB: idMovie});
+      const likes = await db.collection("likes").findOne({ idTMDB: idMovie });
       res.json({ status: 200, data: { likes: likes } });
       break;
 

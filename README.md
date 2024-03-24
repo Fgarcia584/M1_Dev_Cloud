@@ -35,3 +35,12 @@ Your app should be up and running on [http://localhost:3000](http://localhost:30
 You will either see a message stating "You are connected to MongoDB" or "You are NOT connected to MongoDB". Ensure that you have provided the correct `MONGODB_URI` environment variable.
 
 When you are successfully connected, you can refer to the [MongoDB Node.js Driver docs](https://mongodb.github.io/node-mongodb-native/3.4/tutorials/collections/) for further instructions on how to query your database.
+
+
+
+## TODO LIST 
+
+ - [ ] maintain the user's connection if there's a valid JWT in the localStorage
+ - [ ] implement searchBar in navbar 
+ - [ ] CI/CD   
+ - [ ] Refacto of movie's likes TU 

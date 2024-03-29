@@ -1,15 +1,17 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 const AuthContext = createContext();
 
-export  function AuthProvider({ children }) {
+export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const router = useRouter();
 
   const login = (userData, token) => {
     setUser({ userData, token });
-    localStorage.setItem('token', token);
+    if (token) {
+      localStorage.setItem('token', token);
+    }
   };
 
   const logout = async () => {

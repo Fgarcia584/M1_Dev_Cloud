@@ -6,20 +6,42 @@ import Navbar from '../src/components/navbar';
 
 import MoviesList from '../src/components/lists/movies';
 
-// import { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useAuth } from '../src/contexts/auth.context';
 
 export default function Index() {
 
-  const { user } = useAuth();
+  const { login } = useAuth();
   const router = useRouter();
 
-  // useEffect(() => {
-  //   if (!user) {
-  //     router.push('/ui/sign-in');
-  //   }
-  // }, [user, router]);
+  useEffect(() => {
+    const checkUser = async () => {
+      const token = localStorage.getItem('token');
+      console.log('Token', token);
+      if (token) {
+        await fetch('/api/auth/validate-token', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ token: token}),
+        }).then(async (res) => {
+          if (res.status === 200) {
+            const data = await res.json();
+            console.log('User data', data);
+            login({ userData: data.user, token });
+          } else {
+            localStorage.removeItem('token');
+          }
+        }).catch((error) => {
+          console.error('Failed to validate token', error);
+        });
+      }
+    };
+
+    checkUser();
+  }, []);
 
   return (
     <Container maxWidth={false} disableGutters={true} sx={{ backgroundColor: "#353535" }} >

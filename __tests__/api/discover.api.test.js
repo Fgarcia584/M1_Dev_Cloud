@@ -52,18 +52,18 @@ describe('API Handler for Discover', () => {
     expect(res.json).toHaveBeenCalledWith({ status: 500, error: 'Internal Server Error' });
   });
 
-  // it('should handle errors in configuration', async () => {
-  //   jest.replaceProperty(ConfigService.themoviedb.keys, 'API_TOKEN', jest.fn().mockReturnValue('MY_API_TOKEN_VALUE'));
+  it('should handle errors in configuration', async () => {
+    jest.replaceProperty(ConfigService.themoviedb.keys, 'API_TOKEN', jest.fn().mockReturnValue('MY_API_TOKEN_VALUE'));
 
-  //   const req = {};
-  //   const res = {
-  //     json: jest.fn(),
-  //     status: jest.fn().mockReturnThis()
-  //   };
+    const req = {};
+    const res = {
+      json: jest.fn(),
+      status: jest.fn().mockReturnThis()
+    };
 
-  //   await handler(req, res);
+    await handler(req, res);
 
-  //   expect(res.status).toHaveBeenCalledWith(500);
-  //   expect(res.json).toHaveBeenCalledWith({ status: 500, error: 'Internal Server Error' });
-  // });
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith({ status: 500, error: 'Internal Server Error' });
+  });
 });

@@ -24,49 +24,49 @@ describe("/api/likes API", () => {
         expect(handler).toBeDefined();
     });
 
-    // it("should increment like counter for an existing movie", async () => {
-    //     const { req, res } = createMocks({
-    //         method: "PATCH",
-    //         query: { idMovie: 123 },
-    //     });
+    it("should increment like counter for an existing movie", async () => {
+        const { req, res } = createMocks({
+            method: "PATCH",
+            query: { idMovie: 123 },
+        });
 
-    //     await handler(req, res);
+        await handler(req, res);
 
-    //     expect(res._getStatusCode()).toBe(201);
-    //     expect(res._getJSONData().data.action).toBe("likeCounter updated");
-    // });
+        expect(res._getStatusCode()).toBe(201);
+        expect(res._getJSONData().data.action).toBe("likeCounter updated");
+    });
 
-    // it("should create like counter for a new movie", async () => {
-    //     const { req, res } = createMocks({
-    //         method: "PATCH",
-    //         query: { idMovie: 456 },
-    //     });
+    it("should create like counter for a new movie", async () => {
+        const { req, res } = createMocks({
+            method: "PATCH",
+            query: { idMovie: 456 },
+        });
 
-    //     await handler(req, res);
+        await handler(req, res);
 
-    //     expect(res._getStatusCode()).toBe(201);
-    //     expect(res._getJSONData().data.action).toBe("likeCounter updated");
-    // });
+        expect(res._getStatusCode()).toBe(201);
+        expect(res._getJSONData().data.action).toBe("likeCounter updated");
+    });
 
-    // it("should get like counter for a movie", async () => {
-    //     const { req, res } = createMocks({
-    //         method: "GET",
-    //         query: { idMovie: 123 },
-    //     });
+    it("should get like counter for a movie", async () => {
+        const { req, res } = createMocks({
+            method: "GET",
+            query: { idMovie: 123 },
+        });
 
-    //     await handler(req, res);
+        await handler(req, res);
 
-    //     expect(res._getStatusCode()).toBe(200);
-    //     expect(res._getJSONData().data.likes).toBeDefined();
-    // });
+        expect(res._getStatusCode()).toBe(200);
+        expect(res._getJSONData().data.likes).toBeDefined();
+    });
 
-    // it("should return 405 if method is not allowed", async () => {
-    //     const { req, res } = createMocks({
-    //         method: "PUT",
-    //     });
+    it("should return 405 if method is not allowed", async () => {
+        const { req, res } = createMocks({
+            method: "PUT",
+        });
 
-    //     await handler(req, res);
+        await handler(req, res);
 
-    //     expect(res._getStatusCode()).toBe(405);
-    // });
+        expect(res._getStatusCode()).toBe(405);
+    });
 });

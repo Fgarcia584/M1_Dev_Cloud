@@ -32,6 +32,7 @@ jobs:
       environment:
         VERCEL_ORG_ID: $VERCEL_ORG_ID
         VERCEL_PROJECT_ID: $VERCEL_PROJECT_ID
+        MONGODB_URI: $MONGODB_URI
       steps:
         - checkout
         - run:

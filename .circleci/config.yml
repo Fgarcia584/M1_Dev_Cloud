@@ -32,7 +32,6 @@ jobs:
       environment:
         VERCEL_ORG_ID: $VERCEL_ORG_ID
         VERCEL_PROJECT_ID: $VERCEL_PROJECT_ID
-        MONGODB_URI: $MONGODB_URI
       steps:
         - checkout
         - run:
@@ -51,7 +50,7 @@ jobs:
   # Fourth job declared is for deploying the project to Vercel in preview
   preview_deployment:
     docker:
-      - image: circleci/node:latest
+      - image: cimg/node:20.5.0
     environment:
       VERCEL_ORG_ID: $VERCEL_ORG_ID
       VERCEL_PROJECT_ID: $VERCEL_PROJECT_ID

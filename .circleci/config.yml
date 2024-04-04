@@ -29,9 +29,9 @@ jobs:
   deploy_prod:
       docker:
         - image: cimg/node:20.5.0
-      environment:
-        VERCEL_ORG_ID: $VERCEL_ORG_ID
-        VERCEL_PROJECT_ID: $VERCEL_PROJECT_ID
+      # environment:
+      #   VERCEL_ORG_ID: $VERCEL_ORG_ID
+      #   VERCEL_PROJECT_ID: $VERCEL_PROJECT_ID
       steps:
         - checkout
         - run:
@@ -59,7 +59,12 @@ jobs:
           command: sudo npm install --global vercel@latest
       - run:
           name: Pull Vercel Environment Information
-          command: sudo vercel pull ./ynov-m1-dev-cloud --yes --token=$VERCEL_TOKEN
+          command: |
+            set -a && source .env && set +a
+            export VERCEL_PROJECT_ID=$VERCEL_PROJECT_ID
+            export VERCEL_ORG_ID=$VERCEL_ORG_ID
+            export VERCEL_TOKEN=$VERCEL_TOKEN
+            sudo vercel pull --yes --environment=preview --token=$VERCEL_TOKEN
       - run:
           name: Build Project Artifacts
           command: sudo vercel build --token=$VERCEL_TOKEN

@@ -51,10 +51,11 @@ jobs:
   preview_deployment:
     docker:
       - image: cimg/node:20.5.0
+    working_directory: ~/ynov-m1-dev-cloud 
     environment:
       VERCEL_ORG_ID: $VERCEL_ORG_ID
       VERCEL_PROJECT_ID: $VERCEL_PROJECT_ID
-    working_directory: ynov-m1-dev-cloud 
+    
     steps:
       - checkout
       - run:

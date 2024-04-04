@@ -51,10 +51,9 @@ jobs:
   preview_deployment:
     docker:
       - image: cimg/node:20.5.0
-    # working_directory: ~/ynov-m1-dev-cloud 
+    working_directory: ~/with-mongodb-app
     steps:
       - checkout
-      - working_directory: ~/with-mongodb-app
       - run:
           name: Install Vercel CLI
           command: sudo npm install --global vercel@latest

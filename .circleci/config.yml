@@ -38,6 +38,9 @@ jobs:
             name: Install Vercel CLI
             command: sudo npm install --global vercel@latest
         - run:
+            name: Link Vercel Project
+            command: sudo vercel link $VERCEL_PROJECT_ID --org $VERCEL_ORG_ID
+        - run:
             name: Pull Vercel Environment Information
             command: sudo vercel pull --yes --environment=production --token=$VERCEL_TOKEN
         - run:

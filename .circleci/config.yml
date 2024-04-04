@@ -54,12 +54,17 @@ jobs:
   preview_deployment:
     docker:
       - image: cimg/node:20.5.0
-    working_directory: ~/with-mongodb-app
+    environment:
+        VERCEL_ORG_ID: $VERCEL_ORG_ID
+        VERCEL_PROJECT_ID: $VERCEL_PROJECT_ID
     steps:
       - checkout
       - run:
           name: Install Vercel CLI
           command: sudo npm install --global vercel@latest
+      - run:
+          name: Pull Vercel Environment Information
+          command: sudo vercel pull --yes --environment=production --token=$VERCEL_TOKEN
       - run:
           name: Pull Vercel Environment Information
           command: 

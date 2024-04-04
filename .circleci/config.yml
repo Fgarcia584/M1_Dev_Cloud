@@ -54,20 +54,18 @@ jobs:
     environment:
       VERCEL_ORG_ID: $VERCEL_ORG_ID
       VERCEL_PROJECT_ID: $VERCEL_PROJECT_ID
+    working_directory: ynov-m1-dev-cloud 
     steps:
       - checkout
       - run:
           name: Install Vercel CLI
           command: sudo npm install --global vercel@latest
       - run:
-          name: Link Vercel Project
-          command: sudo vercel link --yes --token=$VERCEL_TOKEN
-      - run:
           name: Pull Vercel Environment Information
-          command: sudo vercel env pull .env --yes --token=$VERCEL_TOKEN
+          command: sudo vercel pull --yes --token=$VERCEL_TOKEN
       - run:
           name: Build Project Artifacts
-          command: sudo vercel build --yes --token=$VERCEL_TOKEN
+          command: sudo vercel build --token=$VERCEL_TOKEN
       - run:
           name: Deploy Project Artifacts to Vercel
           command: sudo vercel deploy --prebuilt --token=$VERCEL_TOKEN

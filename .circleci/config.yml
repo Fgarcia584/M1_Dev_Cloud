@@ -61,7 +61,7 @@ jobs:
           command: sudo npm install --global vercel@latest
       - run:
           name: Link Vercel Project
-          command: sudo vercel link $VERCEL_PROJECT_ID --org $VERCEL_ORG_ID --token=$VERCEL_TOKEN
+          command: sudo vercel link --yes --token=$VERCEL_TOKEN
       - run:
           name: Pull Vercel Environment Information
           command: sudo vercel pull --yes --token=$VERCEL_TOKEN

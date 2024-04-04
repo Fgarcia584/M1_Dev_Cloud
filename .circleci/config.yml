@@ -25,7 +25,7 @@ jobs:
           command: npm run test:ci
       - store_test_results:
           path: ./test-results/
-  # Third job declared is for deploying the project to Vercel
+  # Third job declared is for deploying the project to Vercel in production
   deploy_prod:
       docker:
         - image: cimg/node:20.5.0
@@ -48,6 +48,29 @@ jobs:
         - run:
             name: Deploy Project Artifacts to Vercel
             command: sudo vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
+  # Fourth job declared is for deploying the project to Vercel in preview
+  preview_deployment:
+    docker:
+      - image: circleci/node:latest
+    environment:
+      VERCEL_ORG_ID: $VERCEL_ORG_ID
+      VERCEL_PROJECT_ID: $VERCEL_PROJECT_ID
+    steps:
+      - checkout
+      - run:
+          name: Install Vercel CLI
+          command: npm install --global vercel@latest
+      - run:
+          name: Pull Vercel Environment Information
+          command: vercel pull --yes --environment=preview --token=$VERCEL_TOKEN
+      - run:
+          name: Build Project Artifacts
+          command: vercel build --token=$VERCEL_TOKEN
+      - run:
+          name: Deploy Project Artifacts to Vercel
+          command: vercel deploy --prebuilt --token=$VERCEL_TOKEN
+
+
 
 workflows:
   version: 2
@@ -60,3 +83,9 @@ workflows:
           filters:
             branches:
               only: /master/
+      - preview_deployment:
+          requires:
+            - unit_tests
+          filters:
+            branches:
+              only: /develop/

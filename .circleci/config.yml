@@ -48,7 +48,7 @@ jobs:
   preview_deployment:
     docker:
       - image: cimg/node:20.5.0
-    working_directory: ~/with-mongodb-app
+    working_directory: ~/ynov-m1-dev-cloud
     steps:
       - checkout
       - run:

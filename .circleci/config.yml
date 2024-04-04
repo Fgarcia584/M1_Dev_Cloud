@@ -54,6 +54,8 @@ jobs:
     # working_directory: ~/ynov-m1-dev-cloud 
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/ynov-m1-dev-cloud
       - run:
           name: Install Vercel CLI
           command: sudo npm install --global vercel@latest

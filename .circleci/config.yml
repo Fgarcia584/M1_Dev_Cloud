@@ -10,7 +10,7 @@ jobs:
       - checkout
       - run: echo "Building things..."
   # Second job declared is for launching unit tests with Jest
-  unit-tests:
+  unit_tests:
     executor: node/default
     environment:
       JEST_JUNIT_OUTPUT_DIR: ./test-results/
@@ -42,7 +42,7 @@ jobs:
             command: sudo vercel pull --yes --environment=production --token=$VERCEL_TOKEN
         - run:
             name: Build Project Artifacts
-            command: |
+            command:
               node --version
               sudo vercel build --prod --token=$VERCEL_TOKEN
         - run:

@@ -54,18 +54,13 @@ jobs:
     # working_directory: ~/ynov-m1-dev-cloud 
     steps:
       - checkout
-      - attach_workspace:
-          at: ~/ynov-m1-dev-cloud
+      - working_directory: ~/with-mongodb-app
       - run:
           name: Install Vercel CLI
           command: sudo npm install --global vercel@latest
       - run:
           name: Pull Vercel Environment Information
-          command: |
-            set -a && source .env && set +a
-            export VERCEL_PROJECT_ID=$VERCEL_PROJECT_ID
-            export VERCEL_ORG_ID=$VERCEL_ORG_ID
-            export VERCEL_TOKEN=$VERCEL_TOKEN
+          command: 
             sudo vercel pull --yes --environment=preview --token=$VERCEL_TOKEN
       - run:
           name: Build Project Artifacts

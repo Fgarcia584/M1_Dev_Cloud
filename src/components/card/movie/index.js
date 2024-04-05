@@ -17,14 +17,15 @@ function MovieCard(props) {
     }
 
     return (
-        <Box  >
-            <Card sx={{ maxWidth: 345, height: "100%" }} >
+        <Box sx={{ height:"100%"}} >
+            <Card sx={{ height: "100%", width:"15vw" }} >
                 <CardActionArea onClick={handleClick} >
                     <CardMedia
                         component="img"
                         height="100%"
                         image={ConfigService.themoviedb.urls.posters + movie.poster_path}
                         alt="film poster"
+                        width="100%"
                     />
                 </CardActionArea>
             </Card>

@@ -47,6 +47,10 @@ function ResponsiveAppBar() {
         handleCloseUserMenu();
     };
 
+    useEffect(() => {
+        console.log('User', user);
+    }, []);
+
     return (
         <AppBar position="static" sx={{ px: 2 }}>
             <Container maxWidth={false} >
@@ -151,7 +155,7 @@ function ResponsiveAppBar() {
                                 }}
                                 onClick={handleOpenUserMenu}
                             >
-                                Bonjour {user.userData.first_name}
+                                Bonjour {user?.userData?.first_name}
                             </Typography>
                         </Tooltip>
                         <Menu

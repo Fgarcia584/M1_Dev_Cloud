@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import Navbar from '../src/components/navbar';
 
 import MoviesList from '../src/components/lists/movies';
+import SeriesList from '../src/components/lists/series';
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
@@ -13,30 +14,33 @@ import { useAuth } from '../src/contexts/auth.context';
 export default function Index() {
 
   const { login } = useAuth();
-  const router = useRouter();
 
   useEffect(() => {
     const checkUser = async () => {
       const token = localStorage.getItem('token');
       console.log('Token', token);
       if (token) {
-        await fetch('/api/auth/validate-token', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ token: token}),
-        }).then(async (res) => {
-          if (res.status === 200) {
-            const data = await res.json();
-            console.log('User data', data);
-            login({ userData: data.user, token });
-          } else {
-            localStorage.removeItem('token');
-          }
-        }).catch((error) => {
-          console.error('Failed to validate token', error);
-        });
+        try {
+          const response = await fetch('/api/auth/sign-in-with-token', {
+            method: 'POST',
+            body: JSON.stringify({
+              token: token
+            }),
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }).then(async (response) => {
+            const data = await response.json();
+            login(data.user, data.token);
+            console.log('User', user);
+
+          }).catch((error) => {
+            console.error('Failed to sign in');
+          });
+
+        } catch (error) {
+          console.error('Error signing in:', error);
+        }
       }
     };
 
@@ -44,21 +48,21 @@ export default function Index() {
   }, []);
 
   return (
-    <Container maxWidth={false} disableGutters={true} sx={{ backgroundColor: "#353535", minHeight:"2000px" }} >
+    <Container maxWidth={false} disableGutters={true} sx={{ backgroundColor: "#353535", minHeight: "2000px" }} >
       <Navbar />
       <Box sx={{ mt: 5 }}>
         <Typography variant="h4" component="h1" sx={{ color: "white", ml: 2, mb: 2, mt: 4 }}>
           Trending Movies
         </Typography>
-        <MoviesList/>
+        <MoviesList />
         <Typography variant="h4" component="h1" sx={{ color: "white", ml: 2, mb: 2, mt: 4 }}>
-          Trending Movies 2
+          Trending TV Shows
         </Typography>
-        <MoviesList/>
+        <SeriesList />
         <Typography variant="h4" component="h1" sx={{ color: "white", ml: 2, mb: 2, mt: 4 }}>
           Trending Movies 3
         </Typography>
-        <MoviesList/>
+        <MoviesList />
       </Box>
     </Container>
   );

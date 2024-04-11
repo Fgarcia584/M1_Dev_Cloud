@@ -11,7 +11,7 @@ export default async function handler(req, res) {
         try {
             // decode token and if it is valid, return user
 
-            const decodedToken = jwt.verify(token, ConfigService.jwt.secret);
+            const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
             if (decodedToken) {
                 // Token is valid
                 // You can access the user information from the decoded token

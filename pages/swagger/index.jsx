@@ -1,20 +1,26 @@
-import Head from 'next/head';
-
-import SwaggerUI from 'swagger-ui-react';
+import React from 'react';
+import { GetStaticProps, InferGetStaticPropsType } from 'next';
+import { createSwaggerSpec } from 'next-swagger-doc';
+import dynamic from 'next/dynamic';
 import 'swagger-ui-react/swagger-ui.css';
 
-const Swagger = () => {
+const SwaggerUI = dynamic(() => import('swagger-ui-react'), { ssr: false });
 
-  return (
-      <div>
-        <Head>
-          <title>BrowserStack Demo API</title>
-          <meta name="description" content="BrowserStack Demo API Swagger" />
-          <link rel="icon" href="/favicon.svg" />
-        </Head>
-        <SwaggerUI url="/api/doc" />
-      </div>
-  );
+export const getStaticProps = async () => {
+	const spec = createSwaggerSpec({
+		openApiVersion: '3.0.0',
+		title: 'TP Cloud API',
+		version: '1.0.0',
+		apiFolder: 'pages/api',
+	});
+
+	return {
+		props: {
+			spec,
+		},
+	};
 };
 
-export default Swagger;
+export default function ApiDoc({ spec }) {
+	return <SwaggerUI spec={spec} />;
+}

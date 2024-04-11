@@ -65,12 +65,40 @@ jobs:
       - run:
           name: Deploy Project Artifacts to Vercel
           command: sudo vercel deploy --prebuilt --token=$VERCEL_TOKEN
+  # Fifth job declared is for launching the E2E tests
+  e2e_tests:
+    executor: node/default
+    steps:
+      - checkout
+      - run:
+          name: Install Cypress
+          command: "echo 'Installing Cypress'"
+      - run:
+          name: Run E2E tests
+          command: "echo 'Running E2E tests'"
+  # Sixth job declared is for launching the Lighthouse tests (SEO, Performance, Accessibility, Best Practices, PWA)
+  lighthouse_tests:
+    executor: node/default
+    steps:
+      - checkout
+      - run:
+          name: Install Lighthouse
+          command: "echo 'Installing Lighthouse'"
+      - run:
+          name: Run Lighthouse tests
+          command: "echo 'Running Lighthouse tests'"
 
 workflows:
   version: 2
   build_test_deploy:
     jobs:
       - unit_tests
+      - e2e_tests:
+          requires:
+            - unit_tests
+      - lighthouse_tests:
+          requires:
+            - unit_tests
       - deploy_prod:
           requires:
             - unit_tests

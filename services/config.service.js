@@ -9,8 +9,8 @@ export const ConfigService = {
             serie: "https://api.themoviedb.org/3/trending/tv/week",
         },
         keys : {
-            API_KEY: process.env.NEXT_PUBLIC_TMDB_API_KEY,
-            API_TOKEN: process.env.NEXT_PUBLIC_TMDB_API_TOKEN
+            API_KEY: process.env.API_KEY,
+            API_TOKEN: process.env.API_TOKEN
         }
 
     },

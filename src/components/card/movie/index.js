@@ -17,8 +17,8 @@ function MovieCard(props) {
     }
 
     return (
-        <Box sx={{ height:"100%"}} >
-            <Card sx={{ height: "100%", width:"15vw" }} >
+        <Box sx={{ height: "100%" }} >
+            <Card sx={{ height: "100%", width: "15vw" }} >
                 <CardActionArea onClick={handleClick} >
                     <CardMedia
                         component="img"

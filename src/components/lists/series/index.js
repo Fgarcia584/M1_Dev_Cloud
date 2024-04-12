@@ -21,7 +21,7 @@ function SeriesList(props) {
     }, []);
 
     return (
-        <Box sx={{ display: 'inline-flex', flexDirection: 'row', width: '100vw', gap: 4, overflow: 'scroll', height: "100%", padding: 2, scrollbarWidth:'none' }} >
+        <Box sx={{ display: 'inline-flex', flexDirection: 'row', width: '100vw', gap: 4, overflow: 'scroll', height: "100%", padding: 2, scrollbarWidth:'none', "&:hover":{scrollbarWidth:'thin'} }} >
             {loading && <p>Loading...</p>}
 
             {series.data && series.data.map((serie) => {
